@@ -16,19 +16,23 @@ def get_sales_data():
     """
     get sales figures input from the user
     """
-    print("please enter sales data from the last market.")
-    print("data should be six numbers")
-    print("example: 10,20,30,44,13,60\n")
-
-    data_str = input("enter your data here:")
+    while True:
     
-    sales_data = data_str.split(",")
-    validate_data(sales_data)
+        print("please enter sales data from the last market.")
+        print("data should be six numbers")
+        print("example: 10,20,30,44,13,60 \n")
 
+        data_str = input("enter your data here:")
+    
+        sales_data = data_str.split(",")
+        if validate_data(sales_data):
+            print("Data is valid!")
+            break
+    return sales_data
 
 def validate_data(values):
     """
-    inside the try, conferts all string values to integers, 
+    inside the try, conferts all string values to integers,
     raises valueerror if strings cannot be conferted,
     or if there arent exactly 6 values
     """
@@ -40,6 +44,8 @@ def validate_data(values):
                 f"Exactly 6 values required, you provided {len(values)}"
             )
     except ValueError as e:
-        print(f"invalid data: {e}, please try again./n")
+        print(f"invalid data: {e}, please try again. \n")
+        return False
+    return True
 
-get_sales_data()
+data = get_sales_data()
