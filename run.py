@@ -49,11 +49,12 @@ def validate_data(values):
             raise ValueError(
                 f"Exactly 6 values required, you provided {len(values)}"
             )
-    except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
+    except ValueError as error:
+        print(f"Invalid data: {error}, please try again.\n")
         return False
 
     return True
+
 
 def update_worksheet(data, worksheet):
     """
@@ -76,13 +77,25 @@ def calculate_surplus_data(sales_row):
     print("Calculating surplus data...\n")
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
-    
     surplus_data = []
     for stock, sales in zip(stock_row, sales_row):
         surplus = int(stock) - sales
         surplus_data.append(surplus)
 
     return surplus_data
+
+def get_last_5_entries_sales():
+    """
+    collect columns of data from sales worksheet, collecting the lasts
+    5 entries for each sandwitch and returns the data as a list of lists.
+    """
+    sales = SHEET.worksheet("sales")
+    columns = []
+    for ind in range(1, 7):
+        column = sales.col_values(ind)
+        columns.append(column[-5:])
+    pprint(columns)
+
 
 def main():
     """
@@ -96,4 +109,5 @@ def main():
 
 
 print("Welcome to Love Sandwiches Data Automation")
-main()
+# main()
+get_last_5_entries_sales()
